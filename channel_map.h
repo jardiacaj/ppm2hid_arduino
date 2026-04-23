@@ -1,5 +1,6 @@
 #pragma once
 #include <Arduino.h>
+#include <Joystick.h>
 
 // Joystick axis index values used by emit_channels() / set_axis().
 #define AXIS_X  0
