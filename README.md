@@ -83,16 +83,17 @@ Pin 2 (INT0) is the default. Pin 3 (INT1) also works — change `PPM_INPUT_PIN` 
 
 ## Default channel map (Absima CR10P)
 
-| Channel | Type | Joystick output | Inverted |
-|---------|------|-----------------|----------|
-| 1 | Axis | X (steering) | No |
-| 2 | Axis | Y (throttle) | Yes |
-| 3 | Button | Button 0 | — |
-| 4 | Button | Button 1 | — |
-| 5 | Axis | Rx | No |
-| 6 | Axis | Ry | No |
-| 7 | 3-pos switch | Button 2 (>1300 µs) + Button 3 (>1700 µs) | — |
-| 8 | Button | Button 4 | — |
+| Channel | Transmitter control | Type | HID axis / button | Xbox 360 equivalent | Inverted |
+|---------|-------------------|------|-------------------|---------------------|----------|
+| 1 | Steering wheel | Axis | X | Left stick X | No |
+| 2 | Throttle trigger | Axis | Y | Left stick Y | Yes |
+| 3 | Momentary switch | Button | Button 0 | A | — |
+| 4 | Momentary switch | Button | Button 1 | B | — |
+| 5 | Aux proportional | Axis | Rx | Right stick X | No |
+| 6 | Aux proportional | Axis | Ry | Right stick Y | No |
+| 7 | 3-pos switch (low) | Button | Button 2 (>1300 µs) | LB | — |
+| 7 | 3-pos switch (high) | Button | Button 3 (>1700 µs) | RB | — |
+| 8 | Momentary switch | Button | Button 4 | X | — |
 
 To change the mapping, edit `channel_map.cpp` → `emit_channels()`.
 
