@@ -16,6 +16,8 @@ Related project: [ppm2hid](https://github.com/jardiacaj/ppm2hid) — the Python/
 - RC receiver with a PPM output (also called "sum signal" or "CPPM")
 - 3-wire connection: PPM signal, +5 V (or 3.3 V), GND
 
+**Enabling PPM on the Absima R10WP / DumboRC P10F(G):** PPM mode is not active by default. Once the receiver is bound to the transmitter, press the bind button **3 times** to toggle PPM output on the dedicated PPM pin.
+
 ## Wiring
 
 ```
