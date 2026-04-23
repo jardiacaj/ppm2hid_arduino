@@ -23,10 +23,12 @@ RC Receiver                  Arduino Leonardo / Pro Micro
 ─────────────────────────────────────────────────────────
 PPM OUT ─────────────────────── Pin 2  (INT0)
 GND ─────────────────────────── GND
-VCC ─────── (receiver's own supply; share only GND)
+VCC ─────────────────────────── 5V
 ```
 
 Pin 2 (INT0) is the default. Pin 3 (INT1) also works — change `PPM_INPUT_PIN` in `config.h`.
+
+**Powering the receiver from the Arduino 5V pin:** The 5V pin is the USB bus supply through a polyfuse (500 mA total budget). The board itself draws ~50–100 mA, leaving ~400 mA for the receiver — sufficient for any standard receiver not driving servos directly. Do not use a GPIO pin for power; GPIO pins are limited to 40 mA and will be damaged by receiver current draw. If the receiver also powers servos, use a separate BEC or battery pack and share only GND with the Arduino.
 
 **3.3 V receivers:** The ATmega32U4 input threshold is ~1.5 V; a 3.3 V signal is detected reliably without level shifting.
 
