@@ -4,7 +4,7 @@ Arduino firmware that reads a PPM signal from an RC receiver and presents the bo
 
 Works on **Arduino Leonardo** and **Arduino Pro Micro** (ATmega32U4), the only common Arduino-class boards with native USB HID support.
 
-Default channel map matches the **Absima CR10P / Dumbo RC DDF-350** transmitter. Mapping is easy to change in `channel_map.cpp`.
+Default channel map matches the **Absima CR10P / Dumbo RC DDF-350** transmitter and its receiver (**Absima R10WP**, identical to the **DumboRC P10F(G)**). Mapping is easy to change in `channel_map.cpp`.
 
 Related project: [ppm2hid](https://github.com/jardiacaj/ppm2hid) — the Python/Linux equivalent that reads PPM via an audio Line In jack.
 
