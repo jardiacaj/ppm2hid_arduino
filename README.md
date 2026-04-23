@@ -42,20 +42,42 @@ Pin 2 (INT0) is the default. Pin 3 (INT1) also works — change `PPM_INPUT_PIN` 
 
 ## Software requirements
 
-1. **Arduino IDE** 1.8+ or 2.x
-2. **Board support:** Arduino AVR Boards (built-in) — select *Arduino Leonardo* or *SparkFun Pro Micro*
-3. **Library:** [ArduinoJoystickLibrary](https://github.com/MHeironimus/ArduinoJoystickLibrary) by Matthew Heironimus
-   - Install via Arduino IDE → **Tools → Manage Libraries** → search `Joystick by Matthew Heironimus`
+- **Arduino IDE** 1.8+ or 2.x, **or** `arduino-cli` 0.35+
+- **Board support:** Arduino AVR Boards (built-in)
+- **Library:** [ArduinoJoystickLibrary](https://github.com/MHeironimus/ArduinoJoystickLibrary) by Matthew Heironimus
 
 ---
 
 ## Installation
 
+### Arduino IDE
+
 1. Clone or download this repository.
 2. Open `ppm2hid_arduino/ppm2hid_arduino.ino` in the Arduino IDE.
-3. Install ArduinoJoystickLibrary (see above).
-4. Select the correct board and port under **Tools**.
+3. Install the library: **Tools → Manage Libraries** → search `Joystick by Matthew Heironimus` → Install.
+4. Select the board under **Tools → Board** (*Arduino Leonardo* or *SparkFun Pro Micro*) and the correct port.
 5. Click **Upload**.
+
+### arduino-cli
+
+```bash
+# One-time setup (if not already done)
+arduino-cli core update-index
+arduino-cli core install arduino:avr
+arduino-cli lib install "Joystick"
+
+# Clone and build
+git clone https://github.com/jardiacaj/ppm2hid_arduino
+arduino-cli compile --fqbn arduino:avr:leonardo ppm2hid_arduino
+
+# Upload (replace /dev/ttyACM0 with your port)
+arduino-cli upload --fqbn arduino:avr:leonardo --port /dev/ttyACM0 ppm2hid_arduino
+
+# Find your port if unsure
+arduino-cli board list
+```
+
+For Arduino Pro Micro substitute `arduino:avr:leonardo` with `SparkFun:avr:promicro` (requires [SparkFun board support](https://github.com/sparkfun/Arduino_Boards)).
 
 ---
 
@@ -86,7 +108,7 @@ Pin 2 (INT0) is the default. Pin 3 (INT1) also works — change `PPM_INPUT_PIN` 
 | Channel | Transmitter control | Type | HID axis / button | Xbox 360 equivalent | Inverted |
 |---------|-------------------|------|-------------------|---------------------|----------|
 | 1 | Steering wheel | Axis | X | Left stick X | No |
-| 2 | Throttle trigger | Axis | Y | Left stick Y | Yes |
+| 2 | Throttle trigger | Axis | Y | Left stick Y | No |
 | 3 | Momentary switch | Button | Button 0 | A | — |
 | 4 | Momentary switch | Button | Button 1 | B | — |
 | 5 | Aux proportional | Axis | Rx | Right stick X | No |
