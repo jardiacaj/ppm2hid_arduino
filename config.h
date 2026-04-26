@@ -39,5 +39,5 @@
 
 // ── Serial debug ──────────────────────────────────────────────────────────
 // Set to 0 before flashing a production device to reduce USB interrupt load.
-#define SERIAL_DEBUG         1
+#define SERIAL_DEBUG         0
 #define SERIAL_BAUD          115200

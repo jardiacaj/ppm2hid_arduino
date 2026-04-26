@@ -38,6 +38,10 @@ Pin 2 (INT0) is the default. Pin 3 (INT1) also works — change `PPM_INPUT_PIN` 
 
 **Inverted PPM:** Some receivers output LOW-active PPM. Set `PPM_INVERTED 1` in `config.h`.
 
+## Status LED
+
+`LED_BUILTIN` blinks at 500 ms (250 ms on / 250 ms off) when the device is ready but the PPM signal is unstable or not detected. Solid off = stable link.
+
 ---
 
 ## Software requirements
@@ -94,12 +98,12 @@ For Arduino Pro Micro substitute `arduino:avr:leonardo` with `SparkFun:avr:promi
 | `AXIS_MIN_US` | `1100` | Axis minimum value (µs) |
 | `AXIS_MAX_US` | `1900` | Axis maximum value (µs) |
 | `AXIS_CENTER_US` | `1500` | Axis neutral/centre value |
-| `AXIS_DEADBAND_US` | `42` | Suppress axis updates within ±N µs |
+| `AXIS_DEADBAND_US` | `0` | Suppress axis updates within ±N µs |
 | `BUTTON_THRESHOLD_US` | `1500` | PPM value above which a button is pressed |
 | `BUTTON_HYSTERESIS_US` | `21` | Hysteresis around button threshold |
 | `CHANNEL_LOCK_FRAMES` | `5` | Stable frames required before accepting channel count |
 | `SIGNAL_LOSS_MS` | `500` | ms without a valid frame before joystick resets to neutral |
-| `SERIAL_DEBUG` | `1` | Print decoded frames to Serial Monitor (set `0` for production) |
+| `SERIAL_DEBUG` | `0` | Print decoded frames to Serial Monitor (set `1` to enable) |
 
 ---
 
@@ -158,7 +162,7 @@ evtest /dev/input/event<N>
 | "Waiting for PPM signal..." never advances | Wrong pin, no PPM signal, or inverted PPM | Check wiring; try `PPM_INVERTED 1` |
 | Channel count never locks | Noisy signal or wrong timing | Add bypass cap; check `CHANNEL_MIN_US`/`CHANNEL_MAX_US` in `config.h` |
 | Axes jitter at neutral | Excessive noise | Increase `AXIS_DEADBAND_US` |
-| Throttle axis reversed | Inversion not applied | Set `invert = true` in `update_axis()` call for ch2 in `channel_map.cpp` (already set by default) |
+| Throttle axis reversed | Inversion needed for your transmitter | Set `invert = true` in the `update_axis()` call for ch2 in `channel_map.cpp` |
 | Device not recognised as joystick | Wrong board | Must be Leonardo or Pro Micro (ATmega32U4) |
 
 ---
