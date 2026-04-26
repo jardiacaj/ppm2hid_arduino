@@ -87,8 +87,8 @@ void emit_channels(const uint16_t *frame, uint8_t ch_count) {
     // ch1 — steering (X axis, no invert)
     if (ch_count >= 1) update_axis(AXIS_X, frame[0], false);
 
-    // ch2 — throttle (Y axis, inverted)
-    if (ch_count >= 2) update_axis(AXIS_Y, frame[1], true);
+    // ch2 — throttle (Y axis)
+    if (ch_count >= 2) update_axis(AXIS_Y, frame[1], false);
 
     // ch3 — button 0
     if (ch_count >= 3)

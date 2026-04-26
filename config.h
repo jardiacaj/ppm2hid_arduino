@@ -22,7 +22,7 @@
 
 // ── Axis deadband ─────────────────────────────────────────────────────────
 // Suppress HID reports when a stick hasn't moved beyond this many µs.
-#define AXIS_DEADBAND_US     42
+#define AXIS_DEADBAND_US     0
 
 // ── Button thresholds ─────────────────────────────────────────────────────
 #define BUTTON_THRESHOLD_US  1500
