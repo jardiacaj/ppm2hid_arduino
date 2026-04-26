@@ -19,12 +19,21 @@ static ChannelLock  lock;
 static uint32_t     last_valid_ms  = 0;
 static bool         in_signal_loss = false;
 
+// Built-in LED status: blink while link is unstable (no channel lock yet) or
+// lost. 250 ms toggle → 500 ms full cycle.
+static const uint16_t LED_BLINK_HALF_MS = 250;
+static uint32_t       last_led_toggle_ms = 0;
+static bool           led_state          = false;
+
 void setup() {
 #if SERIAL_DEBUG
     Serial.begin(SERIAL_BAUD);
     while (!Serial && millis() < 3000) {}  // wait up to 3 s for USB serial
     Serial.println(F("ppm2hid_arduino starting"));
 #endif
+
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, LOW);
 
     channel_map_init();   // initialise Joystick and axis/button state
     channel_lock_reset(&lock);
@@ -80,5 +89,19 @@ check_signal_loss:
 #if SERIAL_DEBUG
         Serial.println(F("Signal lost — joystick reset to neutral"));
 #endif
+    }
+
+    // Link unstable while signal lost or before the channel-count lock latches.
+    bool link_unstable = in_signal_loss || (lock.expected_count == 0);
+    if (link_unstable) {
+        uint32_t now = millis();
+        if (now - last_led_toggle_ms >= LED_BLINK_HALF_MS) {
+            last_led_toggle_ms = now;
+            led_state = !led_state;
+            digitalWrite(LED_BUILTIN, led_state ? HIGH : LOW);
+        }
+    } else if (led_state) {
+        led_state = false;
+        digitalWrite(LED_BUILTIN, LOW);
     }
 }
