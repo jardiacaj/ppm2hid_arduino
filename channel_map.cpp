@@ -49,9 +49,16 @@ static void set_axis(uint8_t axis_idx, int32_t value_us) {
     }
 }
 
+// Central deadzone width in µs, derived from AXIS_DEADZONE_PCT at compile time.
+// Half-range × pct / 100 → ±µs threshold around centre.
+#define _AXIS_DEADZONE_US ((((int32_t)AXIS_MAX_US - (int32_t)AXIS_MIN_US) * (int32_t)AXIS_DEADZONE_PCT) / 200)
+
 static void update_axis(uint8_t axis_idx, uint16_t raw_us, bool invert) {
     int32_t value = invert ? (AXIS_MIN_US + AXIS_MAX_US - (int32_t)raw_us) : (int32_t)raw_us;
-    if (abs(value - (int32_t)axis_last_us[axis_idx]) >= AXIS_DEADBAND_US) {
+    if (_AXIS_DEADZONE_US > 0 && abs(value - (int32_t)AXIS_CENTER_US) <= _AXIS_DEADZONE_US) {
+        value = AXIS_CENTER_US;
+    }
+    if ((uint16_t)value != axis_last_us[axis_idx]) {
         axis_last_us[axis_idx] = (uint16_t)value;
         set_axis(axis_idx, value);
     }

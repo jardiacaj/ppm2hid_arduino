@@ -8,7 +8,7 @@
 #define AXIS_RX 2
 #define AXIS_RY 3
 
-// last-sent values for deadband and hysteresis tracking
+// Last-sent values, used to skip redundant HID emits and track button hysteresis.
 extern uint16_t axis_last_us[4];
 extern bool     btn_last_state[5];
 

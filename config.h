@@ -20,9 +20,12 @@
 #define NUM_AXES             4   // X, Y, Rx, Ry
 #define NUM_BUTTONS          5   // ch3, ch4, ch7a, ch7b, ch8
 
-// ── Axis deadband ─────────────────────────────────────────────────────────
-// Suppress HID reports when a stick hasn't moved beyond this many µs.
-#define AXIS_DEADBAND_US     0
+// ── Axis central deadzone (% of half-range from centre) ──────────────────
+// Stick values within ±AXIS_DEADZONE_PCT % of the centre (relative to half
+// the axis range AXIS_MIN_US..AXIS_MAX_US) snap to exactly centre, killing
+// stick-at-rest jitter without affecting precision near the extremes.
+// 0 disables.
+#define AXIS_DEADZONE_PCT    0
 
 // ── Button thresholds ─────────────────────────────────────────────────────
 #define BUTTON_THRESHOLD_US  1500

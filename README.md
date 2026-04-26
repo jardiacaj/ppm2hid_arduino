@@ -98,7 +98,7 @@ For Arduino Pro Micro substitute `arduino:avr:leonardo` with `SparkFun:avr:promi
 | `AXIS_MIN_US` | `1100` | Axis minimum value (µs) |
 | `AXIS_MAX_US` | `1900` | Axis maximum value (µs) |
 | `AXIS_CENTER_US` | `1500` | Axis neutral/centre value |
-| `AXIS_DEADBAND_US` | `0` | Suppress axis updates within ±N µs |
+| `AXIS_DEADZONE_PCT` | `0` | Central deadzone — values within ±N % of the centre (relative to half the axis range) snap to centre |
 | `BUTTON_THRESHOLD_US` | `1500` | PPM value above which a button is pressed |
 | `BUTTON_HYSTERESIS_US` | `21` | Hysteresis around button threshold |
 | `CHANNEL_LOCK_FRAMES` | `5` | Stable frames required before accepting channel count |
@@ -161,7 +161,7 @@ evtest /dev/input/event<N>
 |---------|-------------|-----|
 | "Waiting for PPM signal..." never advances | Wrong pin, no PPM signal, or inverted PPM | Check wiring; try `PPM_INVERTED 1` |
 | Channel count never locks | Noisy signal or wrong timing | Add bypass cap; check `CHANNEL_MIN_US`/`CHANNEL_MAX_US` in `config.h` |
-| Axes jitter at neutral | Excessive noise | Increase `AXIS_DEADBAND_US` |
+| Axes jitter at neutral | Excessive noise | Increase `AXIS_DEADZONE_PCT` (e.g. `2` = ±2 % around centre) |
 | Throttle axis reversed | Inversion needed for your transmitter | Set `invert = true` in the `update_axis()` call for ch2 in `channel_map.cpp` |
 | Device not recognised as joystick | Wrong board | Must be Leonardo or Pro Micro (ATmega32U4) |
 
